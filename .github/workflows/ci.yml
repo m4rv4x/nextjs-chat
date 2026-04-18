@@ -21,9 +21,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 9
+      - name: Enable corepack (uses packageManager from package.json)
+        run: corepack enable
 
       - uses: actions/setup-node@v4
         with:
@@ -42,8 +41,8 @@ jobs:
       - name: Build
         run: pnpm build
         env:
-          OPENAI_API_KEY: dummy
-          AUTH_SECRET: dummy-at-least-32-characters-long-xxxxx
+          OPENAI_API_KEY: sk-dummy-for-build-only
+          AUTH_SECRET: 0000000000000000000000000000000000000000
           KV_URL: redis://localhost
           KV_REST_API_URL: http://localhost
           KV_REST_API_TOKEN: dummy
@@ -59,3 +58,4 @@ jobs:
       - uses: gitleaks/gitleaks-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_CONFIG: .gitleaks.toml
