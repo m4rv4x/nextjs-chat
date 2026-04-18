@@ -1,0 +1,15 @@
+# Extend the default gitleaks rules; allowlist dummy CI values
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "CI workflow dummy env vars for build"
+paths = [
+  '''\.github/workflows/.*\.ya?ml''',
+]
+# Lines from our CI matching dummy patterns
+regexes = [
+  '''AUTH_SECRET:\s*0{30,}.*''',
+  '''OPENAI_API_KEY:\s*sk-dummy.*''',
+  '''KV_REST_API_(READ_ONLY_)?TOKEN:\s*dummy''',
+]
